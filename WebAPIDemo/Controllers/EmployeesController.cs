@@ -17,5 +17,13 @@ namespace WebAPIDemo.Controllers
                 return entities.Employees.ToList();
             }
         }
+
+        public Employee Get(int id)
+        {
+            using (var entities = new EmployeesDBEntities())
+            {
+                 return entities.Employees.FirstOrDefault(x => x.ID == id);
+            }
+        }
     }
 }
