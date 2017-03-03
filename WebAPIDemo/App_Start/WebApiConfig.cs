@@ -5,9 +5,26 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 
 namespace WebAPIDemo
 {
+    public class CustomJsonFormatter : JsonMediaTypeFormatter
+    {
+        public CustomJsonFormatter()
+        {
+            this.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("text/html"));
+        }
+
+        //override default content headers so that if the accept header is text/html, it will be changed to application/json
+        public override void SetDefaultContentHeaders(Type type, HttpContentHeaders headers, MediaTypeHeaderValue mediaType)
+        {
+            base.SetDefaultContentHeaders(type, headers, mediaType);
+            headers.ContentType = new MediaTypeHeaderValue("application/json");
+        }
+    }
+
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
@@ -34,8 +51,11 @@ namespace WebAPIDemo
             //camel case property names
             //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            //when the accept-header is text/html, we want to use json formatter
-            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("text/html"));
+            //1. when the accept-header is text/html, we want to use json formatter
+            //config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("text/html"));
+
+            //2. Approach2 2 when accept header is text/html, we want to use json formatter
+            config.Formatters.Add(new CustomJsonFormatter());
         }
     }
 }
