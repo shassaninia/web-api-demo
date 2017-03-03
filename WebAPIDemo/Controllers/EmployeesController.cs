@@ -25,5 +25,16 @@ namespace WebAPIDemo.Controllers
                  return entities.Employees.FirstOrDefault(x => x.ID == id);
             }
         }
+
+
+        //FromBody tells web api that data for employee will come from the requests body...
+        public void Post([FromBody] Employee employee)
+        {
+            using (var entities = new EmployeesDBEntities())
+            {
+                entities.Employees.Add(employee);
+                entities.SaveChanges();
+            }
+        }
     }
 }
