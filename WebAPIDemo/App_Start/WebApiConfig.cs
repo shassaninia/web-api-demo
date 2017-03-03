@@ -26,6 +26,9 @@ namespace WebAPIDemo
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            //remove xml formatter irrespective of accept-header
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+
             //indent property names
             config.Formatters.JsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
             //camel case property names
