@@ -18,11 +18,20 @@ namespace WebAPIDemo.Controllers
             }
         }
 
-        public Employee Get(int id)
+        public HttpResponseMessage Get(int id)
         {
             using (var entities = new EmployeesDBEntities())
             {
-                 return entities.Employees.FirstOrDefault(x => x.ID == id);
+                 var entity = entities.Employees.FirstOrDefault(x => x.ID == id);
+
+                if(entity != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Employee with Id = " + id + " not found");
+                }
             }
         }
 
