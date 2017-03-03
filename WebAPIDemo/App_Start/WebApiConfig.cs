@@ -55,7 +55,7 @@ namespace WebAPIDemo
             //config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("text/html"));
 
             //2. Approach2 2 when accept header is text/html, we want to use json formatter
-            config.Formatters.Add(new CustomJsonFormatter());
+            //config.Formatters.Add(new CustomJsonFormatter());
         }
     }
 }
