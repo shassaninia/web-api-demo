@@ -28,12 +28,27 @@ namespace WebAPIDemo.Controllers
 
 
         //FromBody tells web api that data for employee will come from the requests body...
-        public void Post([FromBody] Employee employee)
+        public HttpResponseMessage Post([FromBody] Employee employee)
         {
-            using (var entities = new EmployeesDBEntities())
+            try
             {
-                entities.Employees.Add(employee);
-                entities.SaveChanges();
+
+
+                using (var entities = new EmployeesDBEntities())
+                {
+                    entities.Employees.Add(employee);
+                    entities.SaveChanges();
+
+                    //return a 201 (item created) in the response
+                    var message = Request.CreateResponse(HttpStatusCode.Created, employee);
+                    //return the location of the the new item
+                    message.Headers.Location = new Uri(Request.RequestUri + employee.ID.ToString());
+                    return message;
+                }
+            }
+            catch(Exception ex)
+            {
+               return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
     }
