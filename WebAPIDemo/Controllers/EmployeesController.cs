@@ -22,7 +22,7 @@ namespace WebAPIDemo.Controllers
         {
             using (var entities = new EmployeesDBEntities())
             {
-                 var entity = entities.Employees.FirstOrDefault(x => x.ID == id);
+                 var entity = entities.Employees.FirstOrDefault(x => x.Id == id);
 
                 if(entity != null)
                 {
@@ -51,7 +51,7 @@ namespace WebAPIDemo.Controllers
                     //return a 201 (item created) in the response
                     var message = Request.CreateResponse(HttpStatusCode.Created, employee);
                     //return the location of the the new item
-                    message.Headers.Location = new Uri(Request.RequestUri + employee.ID.ToString());
+                    message.Headers.Location = new Uri(Request.RequestUri + employee.Id.ToString());
                     return message;
                 }
             }
