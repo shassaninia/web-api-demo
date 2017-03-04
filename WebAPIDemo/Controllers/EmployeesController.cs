@@ -10,15 +10,15 @@ namespace WebAPIDemo.Controllers
 {
     public class EmployeesController : ApiController
     {
-        public IEnumerable<Employee> Get()
+        public IHttpActionResult Get()
         {
             using (var entities = new EmployeesDBEntities())
             {
-                return entities.Employees.ToList();
+                return Ok(entities.Employees.ToList());
             }
         }
 
-        public HttpResponseMessage Get(int id)
+        public IHttpActionResult Get(int id)
         {
             using (var entities = new EmployeesDBEntities())
             {
@@ -26,42 +26,36 @@ namespace WebAPIDemo.Controllers
 
                 if (entity != null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                    return Ok(entity);
                 }
                 else
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Employee with Id = " + id + " not found");
+                    return BadRequest($"Did not find an employee with an id of {id}");
                 }
             }
         }
 
 
         //FromBody tells web api that data for employee will come from the requests body...
-        public HttpResponseMessage Post([FromBody] Employee employee)
+        public IHttpActionResult Post([FromBody] Employee employee)
         {
             try
             {
-
-
                 using (var entities = new EmployeesDBEntities())
                 {
                     entities.Employees.Add(employee);
                     entities.SaveChanges();
 
-                    //return a 201 (item created) in the response
-                    var message = Request.CreateResponse(HttpStatusCode.Created, employee);
-                    //return the location of the the new item
-                    message.Headers.Location = new Uri(Request.RequestUri + "/" + employee.Id.ToString());
-                    return message;
+                    return Created(new Uri(Request.RequestUri + "/" + employee.Id.ToString()), employee);
                 }
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                return BadRequest(ex.ToString());
             }
         }
 
-        public HttpResponseMessage Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
             try
             {
@@ -71,20 +65,45 @@ namespace WebAPIDemo.Controllers
 
                     if (entity == null)
                     {
-                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, $"Employee with id: {id} not found");
+                        return BadRequest($"Employee with and id of {id} not found");
                     }
                     else
                     {
                         entities.Employees.Remove(entity);
                         entities.SaveChanges();
 
-                        return Request.CreateResponse(HttpStatusCode.OK, $"Employee with id: {id} deleted");
+                        return Ok($"Employee with and id of {id} was deleted");
                     }
                 }
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                return BadRequest(ex.ToString());
+            }
+        }
+
+
+        public IHttpActionResult Put(int id, Employee employee)
+        {
+            using (var entities = new EmployeesDBEntities())
+            {
+                var entity = entities.Employees.FirstOrDefault(e => e.Id == id);
+
+                if(entity == null)
+                {
+                    return BadRequest($"Employee with an Id of {id} was not found");
+                }
+                else
+                {
+                    entity.FirstName = employee.FirstName;
+                    entity.LastName = employee.LastName;
+                    entity.Gender = employee.Gender;
+                    entity.Salary = employee.Salary;
+
+                    entities.SaveChanges();
+
+                    return Ok(entity);
+                }
             }
         }
     }
