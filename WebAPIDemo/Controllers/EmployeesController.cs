@@ -10,7 +10,8 @@ namespace WebAPIDemo.Controllers
 {
     public class EmployeesController : ApiController
     {
-        public IHttpActionResult Get()
+        [HttpGet]
+        public IHttpActionResult LoadEmployees()
         {
             using (var entities = new EmployeesDBEntities())
             {
@@ -18,7 +19,8 @@ namespace WebAPIDemo.Controllers
             }
         }
 
-        public IHttpActionResult Get(int id)
+        [HttpGet]
+        public IHttpActionResult LoadEmployeeById(int id)
         {
             using (var entities = new EmployeesDBEntities())
             {
