@@ -22,9 +22,9 @@ namespace WebAPIDemo.Controllers
         {
             using (var entities = new EmployeesDBEntities())
             {
-                 var entity = entities.Employees.FirstOrDefault(x => x.Id == id);
+                var entity = entities.Employees.FirstOrDefault(x => x.Id == id);
 
-                if(entity != null)
+                if (entity != null)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
@@ -51,13 +51,40 @@ namespace WebAPIDemo.Controllers
                     //return a 201 (item created) in the response
                     var message = Request.CreateResponse(HttpStatusCode.Created, employee);
                     //return the location of the the new item
-                    message.Headers.Location = new Uri(Request.RequestUri + employee.Id.ToString());
+                    message.Headers.Location = new Uri(Request.RequestUri + "/" + employee.Id.ToString());
                     return message;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        public HttpResponseMessage Delete(int id)
+        {
+            try
+            {
+                using (var entities = new EmployeesDBEntities())
+                {
+                    var entity = entities.Employees.FirstOrDefault(e => e.Id == id);
+
+                    if (entity == null)
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, $"Employee with id: {id} not found");
+                    }
+                    else
+                    {
+                        entities.Employees.Remove(entity);
+                        entities.SaveChanges();
+
+                        return Request.CreateResponse(HttpStatusCode.OK, $"Employee with id: {id} deleted");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
     }
