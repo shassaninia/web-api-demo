@@ -10,11 +10,20 @@ namespace WebAPIDemo.Controllers
 {
     public class EmployeesController : ApiController
     {
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(string gender="All")
         {
             using (var entities = new EmployeesDBEntities())
             {
-                return Ok(entities.Employees.ToList());
+                switch (gender.ToLower())
+                {
+                    case "male":
+                    case "female":
+                        return Ok(entities.Employees.Where(e => e.Gender.ToLower() == gender).ToList());                      
+                    default:
+                        return Ok(entities.Employees.ToList());
+                       
+                }
+                
             }
         }
 
