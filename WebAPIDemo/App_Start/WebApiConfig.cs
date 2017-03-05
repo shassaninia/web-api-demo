@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using WebApiContrib.Formatting.Jsonp;
 
 namespace WebAPIDemo
 {
@@ -56,6 +57,9 @@ namespace WebAPIDemo
 
             //2. Approach2 2 when accept header is text/html, we want to use json formatter
             //config.Formatters.Add(new CustomJsonFormatter());
+
+            var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
+            config.Formatters.Insert(0, jsonpFormatter);
         }
     }
 }
