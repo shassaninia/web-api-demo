@@ -5,9 +5,12 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using EmployeeDataAccess;
+using System.Web.Http.Cors;
 
 namespace WebAPIDemo.Controllers
 {
+
+    [EnableCorsAttribute("*","*","*")]
     public class EmployeesController : ApiController
     {
         public IHttpActionResult Get(string gender="All")

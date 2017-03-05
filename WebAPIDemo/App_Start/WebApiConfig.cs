@@ -66,7 +66,7 @@ namespace WebAPIDemo
             //This will enable cors globally for entire application.
             //If you want to only enable cors for a specific controller, use it as an attribute on the controller
             //and do not create it here.
-            EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+            //EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);
           
         }
