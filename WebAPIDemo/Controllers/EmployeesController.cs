@@ -92,7 +92,7 @@ namespace WebAPIDemo.Controllers
         }
 
 
-        public IHttpActionResult Put(int id, Employee employee)
+        public IHttpActionResult Put(int id, [FromUri] Employee employee)
         {
             using (var entities = new EmployeesDBEntities())
             {
