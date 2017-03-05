@@ -8,6 +8,7 @@ using Newtonsoft.Json.Serialization;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using WebApiContrib.Formatting.Jsonp;
+using System.Web.Http.Cors;
 
 namespace WebAPIDemo
 {
@@ -58,8 +59,16 @@ namespace WebAPIDemo
             //2. Approach2 2 when accept header is text/html, we want to use json formatter
             //config.Formatters.Add(new CustomJsonFormatter());
 
-            var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
-            config.Formatters.Insert(0, jsonpFormatter);
+            //var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
+            //config.Formatters.Insert(0, jsonpFormatter);
+
+            //this will allow all origins, headers, and methods to call this web api service
+            //This will enable cors globally for entire application.
+            //If you want to only enable cors for a specific controller, use it as an attribute on the controller
+            //and do not create it here.
+            EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
+          
         }
     }
 }
