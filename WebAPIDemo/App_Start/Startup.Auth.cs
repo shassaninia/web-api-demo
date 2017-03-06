@@ -10,6 +10,8 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using WebAPIDemo.Providers;
 using WebAPIDemo.Models;
+using Microsoft.Owin.Security.Facebook;
+using WebAPIDemo.Facebook;
 
 namespace WebAPIDemo
 {
@@ -56,8 +58,20 @@ namespace WebAPIDemo
             //    consumerSecret: "");
 
             //app.UseFacebookAuthentication(
-            //    appId: "",
-            //    appSecret: "");
+            //    appId: "1899234670306696",
+            //    appSecret: "f660c6519b2e34fd0d61e3e059bb1ee3");
+
+            var facebookOptions = new FacebookAuthenticationOptions()
+            {
+                AppId = "1899234670306696",
+                AppSecret = "f660c6519b2e34fd0d61e3e059bb1ee3",
+                BackchannelHttpHandler = new FacebookBackChannelHandler(),
+                UserInformationEndpoint = "https://graph.facebook.com/v2.4/me?fields=id,email"
+            };
+
+            facebookOptions.Scope.Add("email");
+
+            app.UseFacebookAuthentication(facebookOptions);
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
