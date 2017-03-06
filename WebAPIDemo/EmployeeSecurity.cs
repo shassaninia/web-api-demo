@@ -6,16 +6,16 @@ using EmployeeDataAccess;
 
 namespace WebAPIDemo
 {
-    public class EmployeeSecurity
-    {
-        public static bool Login(string username, string password)
-        {
-            using (var entities = new EmployeesDBEntities())
-            {
-                return entities.Users.Any(user => user.Username.Equals(username,
-                    StringComparison.OrdinalIgnoreCase) && user.Password == password);
+    //public class EmployeeSecurity
+    //{
+    //    public static bool Login(string username, string password)
+    //    {
+    //        using (var entities = new EmployeesDBEntities())
+    //        {
+    //           // return entities.Users.Any(user => user.Username.Equals(username,
+    //           //     StringComparison.OrdinalIgnoreCase) && user.Password == password);
                                                    
-            }
-        }
-    }
+    //        }
+    //    }
+    //}
 }
