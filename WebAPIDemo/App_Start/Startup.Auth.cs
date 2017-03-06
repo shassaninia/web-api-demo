@@ -59,11 +59,11 @@ namespace WebAPIDemo
             //    appId: "",
             //    appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "69452999802-rkp3csitjcbhtrv51d8mcgeikllqnrln.apps.googleusercontent.com",
+                ClientSecret = "NirlCg_vEC77yrZUMDbuEvNM"
+            });
         }
     }
 }
