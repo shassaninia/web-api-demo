@@ -11,9 +11,11 @@ namespace WebAPIDemo.Controllers
 {
 
     [EnableCorsAttribute("*","*","*")]
+    [RequireHttps]
     public class EmployeesController : ApiController
     {
         [DisableCors]
+        [RequireHttps]
         public IHttpActionResult Get(string gender="All")
         {
             using (var entities = new EmployeesDBEntities())
@@ -31,6 +33,7 @@ namespace WebAPIDemo.Controllers
             }
         }
 
+        
         public IHttpActionResult Get(int id)
         {
             using (var entities = new EmployeesDBEntities())
