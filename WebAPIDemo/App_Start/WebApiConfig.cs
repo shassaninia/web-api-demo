@@ -68,6 +68,8 @@ namespace WebAPIDemo
             //and do not create it here.
             //EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors();
+
+            config.Filters.Add(new RequireHttpsAttribute());
           
         }
     }
