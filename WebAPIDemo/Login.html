@@ -68,6 +68,7 @@
                         //if you do not want to lose the access token when the browser window is closed,
                         //store the access token in local storage instead of session storage
                         localStorage.setItem('accessToken', response.access_token);
+                        localStorage.setItem('userName', response.userName);
 
                         //redirect user data.html
                         window.location.href = "data.html";
