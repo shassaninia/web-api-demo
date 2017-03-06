@@ -47,9 +47,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><input type="button" id="btnGoogleLogin" value="Login with Google" class="btn btn-success" /></td>
-                        </tr>
+                            <tr>
+                                <td><input type="button" id="btnGoogleLogin" value="Login with Google" class="btn btn-success" /></td>
+                            </tr>
+
+                            <tr>
+                                <td><input type="button" id="btnFacebookLogin" value="Login with Facebook" class="btn btn-success" /></td>
+                            </tr>
                         </tbody>
                     </table>
                     <div id="divError" class="alert alert-danger collapse">
@@ -71,6 +75,13 @@
             $('#btnGoogleLogin').click(function () {
 
 
+                window.location.href = '/api/Account/ExternalLogin?provider=Facebook&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Flocalhost%3A55116%2FLogin.html&state=6ClHqZGEkWRosaRKSB6EnB8Lo91WyWJqCxc97vxIE1Y1';
+
+            });
+
+            $('#btnFacebookLogin').click(function () {
+
+
                 window.location.href = '/api/Account/ExternalLogin?provider=Google&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Flocalhost%3A55116%2FLogin.html&state=6ClHqZGEkWRosaRKSB6EnB8Lo91WyWJqCxc97vxIE1Y1';
 
             });
@@ -81,12 +92,12 @@
                 $.ajax({
                     url: '/token',
                     method: 'POST',
-                    contentType:'application/json',
+                    contentType: 'application/json',
                     data: {
                         username: $('#txtUsername').val(),
                         password: $('#txtPassword').val(),
-                        grant_type:'password'
-   
+                        grant_type: 'password'
+
                     },
                     success: function (response) {
                         //if you do not want to lose the access token when the browser window is closed,
