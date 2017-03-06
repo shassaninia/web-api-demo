@@ -6,27 +6,32 @@ using System.Net.Http;
 using System.Web.Http;
 using EmployeeDataAccess;
 using System.Web.Http.Cors;
+using System.Threading;
 
 namespace WebAPIDemo.Controllers
 {
 
     [EnableCorsAttribute("*","*","*")]
-    [RequireHttps]
+    //[RequireHttps]
     public class EmployeesController : ApiController
     {
-        [DisableCors]
-        [RequireHttps]
+        //can be applied to action, controller or in webapiconfig.cs class to apply it to whole application
+        [BasicAuthentication]
         public IHttpActionResult Get(string gender="All")
         {
+            //username is set in the BasicAuthenticationAttribute
+            string username = Thread.CurrentPrincipal.Identity.Name;
+
             using (var entities = new EmployeesDBEntities())
             {
-                switch (gender.ToLower())
+                switch (username.ToLower())
                 {
                     case "male":
+                        return Ok(entities.Employees.Where(e => e.Gender.ToLower() == "male").ToList());
                     case "female":
-                        return Ok(entities.Employees.Where(e => e.Gender.ToLower() == gender).ToList());                      
+                        return Ok(entities.Employees.Where(e => e.Gender.ToLower() == "female").ToList());                      
                     default:
-                        return Ok(entities.Employees.ToList());
+                        return BadRequest("Not male or female");
                        
                 }
                 
