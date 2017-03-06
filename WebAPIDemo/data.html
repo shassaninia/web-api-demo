@@ -57,7 +57,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            if (sessionStorage.getItem('accessToken') == null) {
+            if (localStorage.getItem('accessToken') == null) {
                 window.location.href = "Login.html";
             }
 
@@ -68,7 +68,7 @@
                     url: '/api/employees',
                     method: 'GET',
                     headers: {
-                        'Authorization': 'Bearer ' + sessionStorage.getItem('accessToken')
+                        'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
                     },
                     success: function (data) {
                         $('#tblBody').empty();
@@ -105,7 +105,7 @@
             });
 
             $('#btnLogoff').on('click', function () {
-                sessionStorage.removeItem('accessToken');
+                localStorage.removeItem('accessToken');
 
                 window.location.href = "Login.html";
             });

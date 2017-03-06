@@ -65,9 +65,9 @@
    
                     },
                     success: function (response) {
-                        //store access token in browswer session storage.
-                        //browser session storage is lost when we explicity remove it or close the browser
-                        sessionStorage.setItem('accessToken', response.access_token);
+                        //if you do not want to lose the access token when the browser window is closed,
+                        //store the access token in local storage instead of session storage
+                        localStorage.setItem('accessToken', response.access_token);
 
                         //redirect user data.html
                         window.location.href = "data.html";
