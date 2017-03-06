@@ -56,7 +56,12 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+            if (sessionStorage.getItem('accessToken') == null) {
+                window.location.href = "Login.html";
+            }
+
             $('#btnLoadEmployees').click(function () {
+
 
                 $.ajax({
                     url: '/api/employees',
