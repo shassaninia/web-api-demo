@@ -66,7 +66,7 @@
                 $.ajax({
                     url: '/api/employees',
                     method: 'GET',
-                    headers:{
+                    headers: {
                         'Authorization': 'Bearer ' + sessionStorage.getItem('accessToken')
                     },
                     success: function (data) {
@@ -77,11 +77,18 @@
                             $('#tblBody').append('<tr><td>' + employee.Id + '</td><td>' + employee.FirstName + '</td><td>' + employee.LastName + '</td><td>' + employee.Gender + '</td><td>' + employee.Salary + '</td></tr>');
                         });
 
-                  
+
                     },
                     error: function (jqXHR) {
-                        $('#divErrorText').text(jqXHR.responseText);
-                        $('#divError').show('fade');
+                        if (jqXHR.status == '401') {
+                            $('#errorModal').modal('show');
+
+                            
+                        }
+                        else {
+                            $('#divErrorText').text(jqXHR.responseText);
+                            $('#divError').show('fade');
+                        }
                     }
                 });
 
@@ -90,6 +97,10 @@
 
             $('#linkClose').click(function () {
                 $('#divError').hide('fade');
+            });
+
+            $('#errorModal').on('hidden.bs.modal', function () {
+                window.location.href = "Login.html";
             })
         });
     </script>
