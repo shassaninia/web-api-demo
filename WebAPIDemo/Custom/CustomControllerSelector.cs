@@ -32,17 +32,13 @@ namespace WebAPIDemo.Custom
 
             var versionNumber = "1";
 
-            string customHeader = "X-StudentService-Version";
+            //Find all accept headers where there is a version parameter
+            var acceptHeader = request.Headers.Accept.Where(a => a.Parameters.Count(p => p.Name.ToLower() == "version") > 0);
 
-            if(request.Headers.Contains(customHeader))
+
+            if(acceptHeader.Any())
             {
-                //get version number from header
-                versionNumber = request.Headers.GetValues(customHeader).FirstOrDefault();
-
-                if(versionNumber.Contains(","))
-                {
-                    versionNumber = versionNumber.Substring(0, versionNumber.IndexOf(","));
-                }
+                versionNumber = acceptHeader.First().Parameters.First(p => p.Name.ToLower() == "version").Value;
             }
 
             if (versionNumber == "1")
