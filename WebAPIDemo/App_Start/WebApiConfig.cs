@@ -40,10 +40,16 @@ namespace WebAPIDemo
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                name: "Version1",
+                routeTemplate: "api/v1/students/{id}",
+                defaults: new { id = RouteParameter.Optional, controller = "StudentsV1" }
             );
+
+            config.Routes.MapHttpRoute(
+              name: "Version2",
+              routeTemplate: "api/v2/students/{id}",
+              defaults: new { id = RouteParameter.Optional, controller = "StudentsV2" }
+          );
 
             //remove xml formatter irrespective of accept-header
             //config.Formatters.Remove(config.Formatters.XmlFormatter);
