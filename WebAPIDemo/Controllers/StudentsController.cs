@@ -22,10 +22,16 @@ namespace WebAPIDemo.Controllers
         }
 
         // = /api/students/1
-        [Route("{id}")]
+        [Route("{id:int}")]
         public Student Get(int id)
         {
             return students.FirstOrDefault(s => s.Id == id);
+        }
+
+        [Route("{name:alpha}")]
+        public Student Get(string name)
+        {
+            return students.FirstOrDefault(s => s.Name == name);
         }
 
         // = /api/students/1/courses
