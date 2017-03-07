@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using WebAPIDemo.Models;
 
 namespace WebAPIDemo.Controllers
 {
+    [RoutePrefix("api/students")]
     public class StudentsController : ApiController
     {
         static List<Student> students = new List<Student>
@@ -17,21 +15,21 @@ namespace WebAPIDemo.Controllers
             new Student { Id = 3, Name = "John" },
         };
 
-        [Route("api/students")]
+        [Route("")]
         public IEnumerable<Student> Get()
         {
             return students;
         }
 
         // = /api/students/1
-        [Route("api/students/{id}")]
+        [Route("{id}")]
         public Student Get(int id)
         {
             return students.FirstOrDefault(s => s.Id == id);
         }
 
         // = /api/students/1/courses
-        [Route("api/students/{id}/courses")]
+        [Route("{id}/courses")]
         public IEnumerable<string> GetStudentCourses(int id)
         {
             if (id == 1)
