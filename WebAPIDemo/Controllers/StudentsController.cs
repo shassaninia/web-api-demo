@@ -31,7 +31,7 @@ namespace WebAPIDemo.Controllers
         [Route("{name:alpha}")]
         public Student Get(string name)
         {
-            return students.FirstOrDefault(s => s.Name == name);
+            return students.FirstOrDefault(s => s.Name.ToLower() == name.ToLower());
         }
 
         // = /api/students/1/courses
