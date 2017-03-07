@@ -38,6 +38,11 @@ namespace WebAPIDemo.Custom
             {
                 //get version number from header
                 versionNumber = request.Headers.GetValues(customHeader).FirstOrDefault();
+
+                if(versionNumber.Contains(","))
+                {
+                    versionNumber = versionNumber.Substring(0, versionNumber.IndexOf(","));
+                }
             }
 
             if (versionNumber == "1")
