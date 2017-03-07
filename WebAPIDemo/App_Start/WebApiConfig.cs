@@ -9,6 +9,8 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using WebApiContrib.Formatting.Jsonp;
 using System.Web.Http.Cors;
+using System.Web.Http.Dispatcher;
+using WebAPIDemo.Custom;
 
 namespace WebAPIDemo
 {
@@ -76,7 +78,10 @@ namespace WebAPIDemo
             config.EnableCors();
 
             //config.Filters.Add(new RequireHttpsAttribute());
-          
+
+
+            //replace the built-in controller selector with our custom selector
+            config.Services.Replace(typeof(IHttpControllerSelector), new CustomControllerSelector(config));
         }
     }
 }
