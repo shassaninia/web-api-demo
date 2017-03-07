@@ -22,11 +22,14 @@ namespace WebAPIDemo.Controllers
             return students;
         }
 
+        // = /api/students/1
         public Student Get(int id)
         {
             return students.FirstOrDefault(s => s.Id == id);
         }
 
+        // = /api/students/1/courses
+        [Route("api/students/{id}/courses")]
         public IEnumerable<string> GetStudentCourses(int id)
         {
             if (id == 1)
