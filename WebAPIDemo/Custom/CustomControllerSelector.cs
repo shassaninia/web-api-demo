@@ -32,12 +32,12 @@ namespace WebAPIDemo.Custom
 
             var versionNumber = "1";
 
-            //get query string part of url
-            var versionQueryString = HttpUtility.ParseQueryString(request.RequestUri.Query);
+            string customHeader = "X-StudentService-Version";
 
-            if (versionQueryString["v"] != null)
+            if(request.Headers.Contains(customHeader))
             {
-                versionNumber = versionQueryString["v"];
+                //get version number from header
+                versionNumber = request.Headers.GetValues(customHeader).FirstOrDefault();
             }
 
             if (versionNumber == "1")
