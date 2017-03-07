@@ -39,5 +39,19 @@ namespace WebAPIDemo.Controllers
             else
                 return new List<string> { "Bootstrap", "jQuery", "AngularJs" };
         }
+
+        //[Route("api/teachers")] - This will require you to put in /api/students/api/teachers because of the route prefix. To avoid this, use a Tilda symbol:
+        [Route("~/api/teachers")]
+        public IEnumerable<Teacher> GetTeachers()
+        {
+            List<Teacher> teachers = new List<Teacher>
+            {
+                new Teacher { Id = 1, Name = "Rob"},
+                new Teacher { Id = 2, Name = "Mike" },
+                new Teacher { Id = 3, Name = "Mary" }
+            };
+
+            return teachers;
+        }
     }
 }
