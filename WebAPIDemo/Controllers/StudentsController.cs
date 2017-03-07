@@ -22,7 +22,7 @@ namespace WebAPIDemo.Controllers
         }
 
         // = /api/students/1
-        [Route("{id:int}")]
+        [Route("{id:int:range(1,3)}")]
         public Student Get(int id)
         {
             return students.FirstOrDefault(s => s.Id == id);
